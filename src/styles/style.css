@@ -1,0 +1,71 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: #c9d6df;
+    height: 100%;
+    font-family: Playfair Display;
+}
+
+.hole-page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+.btn {
+    border: none;
+    border-radius: 30px;
+}
+
+.btn-primary {
+    color: #f0f5f9;
+    background-color: #1F7CEF;
+    width: 130px;
+    height: 35px;
+    font-size: 16px;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.wrapper-list {
+    display: flex;
+    justify-content: right;
+    height: 100%;
+}
+
+.wrapper-promo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav-link{
+    height: 60px;
+    font-size: 24px;
+    display: flex;
+}
+
+.nav-text{
+    align-self: center;
+    margin-left: 20px;
+}
+
+.icon-color{
+    filter: invert(100%) sepia(6%) saturate(1903%) hue-rotate(174deg) brightness(97%) contrast(101%);
+}
+

@@ -1,0 +1,57 @@
+<template>
+  <div class="hole-page">
+    <LogoBar :showlogout="true" />
+    <div class="wrapper-list">
+      <CardList v-bind:knjige="this.preporucene" v-bind:preporuka="true">
+        <template v-slot:header>
+          <p class="heading">Knjige koje su Vam preporučene:</p>
+        </template>
+      </CardList>
+    </div>
+    <Sidebar />
+  </div>
+</template>
+
+<script>
+import LogoBar from "@/components/LogoBar.vue";
+import Sidebar from "@/components/Sidebar.vue";
+import CardList from "@/components/CardList.vue";
+import knjige from "@/data/knjige.js";
+import preporuceneKnjige from "@/data/preporucene.js";
+
+export default {
+  name: "PerporuceneKnjige",
+  components: {
+    LogoBar,
+    Sidebar,
+    CardList
+  },
+  created(){
+    if (localStorage.getItem("user")) {
+      this.user = JSON.parse(localStorage.getItem("user"));
+    }
+    let prepor = preporuceneKnjige.filter(prep => prep.za == this.user.username);
+    knjige.forEach(knjiga => {
+      prepor.some(prep=>{
+        if(prep.idKnjige == knjiga.id){
+          let knjigaPrep = knjiga;
+          knjigaPrep.prep = prep.od;
+          this.preporucene.push(knjigaPrep);
+          return true;
+        }
+      });
+    });
+    console.log(JSON.stringify(this.preporucene));
+  },
+  data(){
+    return{
+      preporucene: [],
+      user: null
+    }
+  }
+};
+</script>
+
+<style>
+
+</style>
