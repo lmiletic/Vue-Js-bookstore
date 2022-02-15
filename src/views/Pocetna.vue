@@ -1,13 +1,13 @@
 <template>
   <div class="hole-page">
     <LogoBar :showlogout="true" />
-    <div class="wrapper-promo">
-        <CardPromo v-bind:knjige="this.knjigeNaProm"/>
-        <CardList v-bind:knjige="this.sveKnjige" v-bind:preporuka="false">
-          <template v-slot:header>
+    <div class="wrapper-promo main-wrapper">
+      <CardPromo v-bind:knjige="this.knjigeNaProm" />
+      <CardList v-bind:knjige="this.sveKnjige" v-bind:preporuka="false">
+        <template v-slot:header>
           <p class="heading">Sve knjige u sistemu:</p>
         </template>
-        </CardList>
+      </CardList>
     </div>
     <Sidebar />
   </div>
@@ -27,21 +27,22 @@ export default {
     LogoBar,
     Sidebar,
     CardList,
-    CardPromo
+    CardPromo,
   },
-  created(){
+  created() {
     this.sveKnjige = knjige;
-    this.knjigeNaProm = knjige.filter(knjiga => knjigePromocija.includes(knjiga.id));
+    this.knjigeNaProm = knjige.filter((knjiga) =>
+      knjigePromocija.includes(knjiga.id)
+    );
   },
-  data(){
-    return{
+  data() {
+    return {
       knjigeNaProm: null,
       sveKnjige: null,
-    }
-  }
+    };
+  },
 };
 </script>
 
 <style>
-
 </style>

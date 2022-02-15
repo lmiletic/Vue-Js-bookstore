@@ -1,7 +1,7 @@
 <template>
   <div class="hole-page">
     <LogoBar :showlogout="true" />
-    <div class="wrapper">
+    <div class="wrapper main-wrapper">
       <Card>
         <template v-slot:header>
           <p class="heading">Izmena lozinke</p>

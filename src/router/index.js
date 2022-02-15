@@ -14,7 +14,7 @@ const beforeEnter = (from, to, next) => {
     return next();
   }
 
-  return next({path: '/login'});
+  return next({ path: '/login' });
 }
 
 
@@ -23,9 +23,9 @@ const routes = [
     path: '/login',
     name: 'Prijava',
     component: Prijava,
-    beforeEnter (from, to, next){
+    beforeEnter(from, to, next) {
       if (localStorage.getItem('user')) {
-        return next({path: '/'});
+        return next({ path: '/' });
       }
       return next();
     }
@@ -69,4 +69,3 @@ const router = new VueRouter({
 })
 
 export default router
- 

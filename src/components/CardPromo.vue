@@ -1,99 +1,110 @@
 <template>
   <div class="card-promo">
-    <header class="form-elements-spacing" >
+    <header class="form-elements-spacing--promo">
       <p class="heading">Knjige na promociji:</p>
     </header>
-    <main class="form-elements-spacing">
+    <main class="form-elements-spacing--promo">
       <div class="promoList" v-if="this.prikazKnjige.length">
-        <img src="@/assets/icons/chevron-left.svg" @click="clickLeft"/>
+        <img :class="arrowL" src="@/assets/icons/chevron-left.svg" @click="clickLeft" />
         <div v-for="knjiga in prikazKnjige" :key="knjiga.id" class="promoFiled">
-          <img :src="'img/knjige/'+ knjiga.img + '.jpg'" class="promoImg" @click="goToBook(knjiga.id)"/>
-          <p @click="goToBook(knjiga.id)">{{knjiga.naziv}}</p>
+          <img
+            :src="'img/knjige/' + knjiga.img + '.jpg'"
+            class="promoImg clickable"
+            @click="goToBook(knjiga.id)"
+          />
+          <p class="clickable" @click="goToBook(knjiga.id)">{{ knjiga.naziv }}</p>
         </div>
-        <img src="@/assets/icons/chevron-right.svg" @click="clickRight"/>
+        <img :class="arrowR" src="@/assets/icons/chevron-right.svg" @click="clickRight" />
       </div>
     </main>
-    <footer class="form-elements-spacing"> 
-    </footer>
+    <footer class="form-elements-spacing--promo"></footer>
   </div>
 </template>
 
 <script>
-import router from '@/router';
+import router from "@/router";
 export default {
-  name: 'CardPromo',
-  props:{
-    knjige: Array
+  name: "CardPromo",
+  props: {
+    knjige: Array,
   },
-  created(){
-    this.last = (this.knjige.length > 4) ? 4 : this.knjige.length;
-    this.prikazKnjige = this.knjige.slice(this.first,this.last);
+  created() {
+    this.last = this.knjige.length > 4 ? 4 : this.knjige.length;
+    this.prikazKnjige = this.knjige.slice(this.first, this.last);
+    this.disableArrows();
   },
-  data(){
-    return{
+  data() {
+    return {
       prikazKnjige: [],
       first: 0,
-      last: 4
-    }
+      last: 4,
+      arrowL: 'arrowEnabled',
+      arrowR: 'arrowEnabled'
+    };
   },
-  methods:{
-    clickRight(){
-      if(this.last < this.knjige.length){
+  methods: {
+    clickRight() {
+      if (this.last < this.knjige.length) {
         this.first++;
         this.last++;
-        this.prikazKnjige = this.knjige.slice(this.first,this.last);
+        this.prikazKnjige = this.knjige.slice(this.first, this.last);
       }
+      this.disableArrows();
     },
-    clickLeft(){
-      if(this.first>0){
+    clickLeft() {
+      if (this.first > 0) {
         this.first--;
         this.last--;
-        this.prikazKnjige = this.knjige.slice(this.first,this.last);
+        this.prikazKnjige = this.knjige.slice(this.first, this.last);
       }
+      this.disableArrows();
     },
-    goToBook(num){
-      router.push({name:'PregledKnjige', params: {id: num}});
-    }
-  }
+    disableArrows(){
+      if(this.first == 0)
+        this.arrowL = "arrowDisabled";
+      else
+        this.arrowL = "arrowEnabled";
+      if(this.last == this.knjige.length)
+        this.arrowR = "arrowDisabled";
+      else
+        this.arrowR = "arrowEnabled";
+    },
+    goToBook(num) {
+      router.push({ name: "PregledKnjige", params: { id: num } });
+    },
+  },
 };
 </script>
 
 <style>
 
-.promoFiled{
+.arrowDisabled{
+  filter: invert(93%) sepia(11%) saturate(313%) hue-rotate(172deg) brightness(90%) contrast(94%);
+  cursor: default;
+}
+
+.arrowEnabled{
+  cursor: pointer;
+}
+
+.promoFiled {
   word-wrap: break-word;
   width: 120px;
   text-align: center;
   font-size: 18px;
 }
 
-.promoList{
-  display:flex;
+.promoList {
+  display: flex;
   gap: 50px;
+  justify-content: space-evenly;
+  width: 100%;
 }
 
-.promoImg{
+.promoImg {
   width: 120px;
   height: 180px;
   margin-top: 40px;
   margin-bottom: 15px;
 }
-
-.card-promo {
-    background-color: #f0f5f9;
-    border-radius: 30px;
-    height: 420px;
-    width: 1100px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right:60px;
-    margin-top:40px;
-}
- 
-.form-elements-spacing {
-    margin-bottom: 10px;
-}
-
 </style>

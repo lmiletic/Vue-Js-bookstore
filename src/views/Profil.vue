@@ -1,17 +1,37 @@
 <template>
   <div class="hole-page">
     <LogoBar :showlogout="true" />
-    <div class="wrapper">
+    <div class="wrapper main-wrapper">
       <Card>
         <template v-slot:header>
-          <p class="heading">Dobrodošli!</p>
+          <p class="heading">Profil</p>
         </template>
 
         <div class="inputs-wrapper">
-          <input v-model="user.ime" class="input-text" type="text" placeholder="Ime" />
-          <input v-model="user.prezime" class="input-text" type="text" placeholder="Prezime" />
-          <input v-model="user.telefon" class="input-text" type="text" placeholder="Kontakt telefon" />
-          <input v-model="user.adresa" class="input-text" type="text" placeholder="Adresa" />
+          <input
+            v-model="user.ime"
+            class="input-text"
+            type="text"
+            placeholder="Ime"
+          />
+          <input
+            v-model="user.prezime"
+            class="input-text"
+            type="text"
+            placeholder="Prezime"
+          />
+          <input
+            v-model="user.telefon"
+            class="input-text"
+            type="text"
+            placeholder="Kontakt telefon"
+          />
+          <input
+            v-model="user.adresa"
+            class="input-text"
+            type="text"
+            placeholder="Adresa"
+          />
         </div>
         <div v-if="notFilled" class="error-unsuccessful-save">
           <p>Moraju sva polja da budu popunjena!</p>
@@ -21,11 +41,13 @@
         </div>
         <template v-slot:footer>
           <button class="btn btn-primary" @click="save()">Sačuvaj</button>
-          <button class="btn btn-primary" @click="changePass()">Izmeni šifru</button>
+          <button class="btn btn-primary" @click="changePass()">
+            Izmeni lozinku
+          </button>
         </template>
       </Card>
     </div>
-    <Sidebar/>
+    <Sidebar />
   </div>
 </template>
 
@@ -33,7 +55,7 @@
 import LogoBar from "@/components/LogoBar.vue";
 import Card from "@/components/Card.vue";
 import Sidebar from "@/components/Sidebar.vue";
-import router from '@/router';
+import router from "@/router";
 
 export default {
   name: "Profil",
@@ -47,28 +69,33 @@ export default {
       this.user = JSON.parse(localStorage.getItem("user"));
     }
   },
-  data(){
-    return{
-      user : null,
-      notFilled : false,
-      saved: false
-    }
+  data() {
+    return {
+      user: null,
+      notFilled: false,
+      saved: false,
+    };
   },
-  methods:{
-    save(){
-      if(this.user.ime=="" || this.user.prezime=="" || this.user.telefon=="" || this.user.adresa==""){
+  methods: {
+    save() {
+      if (
+        this.user.ime == "" ||
+        this.user.prezime == "" ||
+        this.user.telefon == "" ||
+        this.user.adresa == ""
+      ) {
         this.notFilled = true;
         this.saved = false;
-      }else{
+      } else {
         this.notFilled = false;
         localStorage.setItem("user", JSON.stringify(this.user));
-        this.saved=true;
+        this.saved = true;
       }
     },
-    changePass(){
-        router.push({path: '/izmenisifru'});
-    }
-  }
+    changePass() {
+      router.push({ path: "/izmenisifru" });
+    },
+  },
 };
 </script>
 
@@ -77,7 +104,7 @@ export default {
   font-size: 36px;
 }
 
-button{
+button {
   margin: 5px;
 }
 
@@ -98,7 +125,7 @@ button{
   flex-direction: column;
 }
 
-.error-unsuccessful-save{
+.error-unsuccessful-save {
   color: red;
 }
 </style>
