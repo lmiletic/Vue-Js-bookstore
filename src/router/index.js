@@ -6,6 +6,7 @@ import Profil from '../views/Profil.vue'
 import IzmeniSifru from '../views/IzmeniSifru.vue'
 import PreporuceneKnjige from '../views/PreporuceneKnjige.vue';
 import PregledKnjige from '../views/PregledKnjige.vue';
+import DodajKnjigu from '../views/DodajKnjigu.vue';
 
 Vue.use(VueRouter)
 
@@ -60,7 +61,16 @@ const routes = [
     component: PregledKnjige,
     beforeEnter
   },
+  {
+    path: '/dodajKnjigu',
+    name: 'DodajKnjigu',
+    component: DodajKnjigu,
+    beforeEnter
+  },
 ]
+
+//napravi guard za tipove prodavac i kupac
+//napravi gurad za id knjige
 
 const router = new VueRouter({
   mode: 'history',

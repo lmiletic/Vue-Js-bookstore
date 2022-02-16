@@ -45,11 +45,20 @@ export default {
       username: "",
       password: "",
       loginError: false,
+      users: []
     };
+  },
+  created(){
+    if(localStorage.getItem("users")){
+      this.users = JSON.parse(localStorage.getItem("users"));
+    }else{
+      localStorage.setItem("users", JSON.stringify(korisnici));
+      this.users = korisnici;
+    }
   },
   methods: {
     checkLogin() {
-      let ret = korisnici.every((korisnik) => {
+      let ret = this.users.every((korisnik) => {
         if (
           korisnik.username == this.username &&
           korisnik.password == this.password

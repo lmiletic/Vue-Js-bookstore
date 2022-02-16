@@ -22,8 +22,8 @@ export default {
 .card {
   background-color: #f0f5f9;
   border-radius: 30px;
-  height: 520px;
-  width: 480px;
+  /* height: 520px; */
+  min-width: 480px;
   padding: 50px;
   display: flex;
   flex-direction: column;

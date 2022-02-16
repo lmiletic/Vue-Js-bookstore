@@ -30,15 +30,28 @@ export default {
     CardPromo,
   },
   created() {
-    this.sveKnjige = knjige;
-    this.knjigeNaProm = knjige.filter((knjiga) =>
-      knjigePromocija.includes(knjiga.id)
+    if(localStorage.getItem("knjige")){
+      this.sveKnjige = JSON.parse(localStorage.getItem("knjige"));
+    }else{
+      localStorage.setItem("knjige", JSON.stringify(knjige));
+      this.sveKnjige = knjige;
+    }
+    if(localStorage.getItem("promocija")){
+      this.localProm = JSON.parse(localStorage.getItem("promocija"));
+    }else{
+      localStorage.setItem("promocija", JSON.stringify(knjigePromocija));
+      this.localProm = knjigePromocija;
+    }
+    
+    this.knjigeNaProm = this.sveKnjige.filter((knjiga) =>
+      this.localProm.includes(knjiga.id)
     );
   },
   data() {
     return {
       knjigeNaProm: null,
       sveKnjige: null,
+      localProm: []
     };
   },
 };

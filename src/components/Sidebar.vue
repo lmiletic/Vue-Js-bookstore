@@ -29,7 +29,7 @@
           </a>
         </li>
         <li :class="navNum==3?'selected-nav':''" class="nav-link" v-if="user.role == 'Prodavac'">
-          <a class="nav-text" href="/">
+          <a class="nav-text" href="/dodajKnjigu">
             <img class="icon-color" src="@/assets/icons/plus-square.svg" />
             Dodaj knjigu
           </a>

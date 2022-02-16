@@ -60,6 +60,7 @@
 import LogoBar from "@/components/LogoBar.vue";
 import Card from "@/components/Card.vue";
 import Sidebar from "@/components/Sidebar.vue";
+import korisnici from "@/data/korisnici.js";
 
 export default {
   name: "IzmeniSifru",
@@ -72,10 +73,17 @@ export default {
     if (localStorage.getItem("user")) {
       this.user = JSON.parse(localStorage.getItem("user"));
     }
+    if(localStorage.getItem("users")){
+      this.users = JSON.parse(localStorage.getItem("users"));
+    }else{
+      localStorage.setItem("users", JSON.stringify(korisnici));
+      this.users = korisnici;
+    }
   },
   data() {
     return {
       user: null,
+      users: [],
       notFilled: false,
       saved: false,
       notSame: false,
@@ -100,6 +108,12 @@ export default {
             this.notOld = false;
             this.notSame = false;
             this.user.password = this.newPass;
+            for(let i = 0; i < this.users.length; i++){
+              if(this.users[i].username == this.user.username){
+                this.users[i] = this.user;
+              }
+            }
+            localStorage.setItem("users", JSON.stringify(this.users));
             localStorage.setItem("user", JSON.stringify(this.user));
           } else {
             this.saved = false;

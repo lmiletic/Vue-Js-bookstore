@@ -30,10 +30,22 @@ export default {
     if (localStorage.getItem("user")) {
       this.user = JSON.parse(localStorage.getItem("user"));
     }
-    let prepor = preporuceneKnjige.filter(
+    if(localStorage.getItem("knjige")){
+      this.localKnjige = JSON.parse(localStorage.getItem("knjige"));
+    }else{
+      localStorage.setItem("knjige", JSON.stringify(knjige));
+      this.localKnjige = knjige;
+    }
+    if(localStorage.getItem("preporucene")){
+      this.localPreporucene = JSON.parse(localStorage.getItem("preporucene"));
+    }else{
+      localStorage.setItem("preporucene", JSON.stringify(preporuceneKnjige));
+      this.localPreporucene = preporuceneKnjige;
+    }
+    let prepor = this.localPreporucene.filter(
       (prep) => prep.za == this.user.username
     );
-    knjige.forEach((knjiga) => {
+    this.localKnjige.forEach((knjiga) => {
       prepor.some((prep) => {
         if (prep.idKnjige == knjiga.id) {
           let knjigaPrep = knjiga;
@@ -43,12 +55,14 @@ export default {
         }
       });
     });
-    console.log(JSON.stringify(this.preporucene));
+    // console.log(JSON.stringify(this.preporucene));
   },
   data() {
     return {
       preporucene: [],
       user: null,
+      localPreporucene: [],
+      localKnjige: []
     };
   },
 };
