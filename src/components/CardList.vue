@@ -7,8 +7,10 @@
       <table class="table">
         <tr class="row">
           <td><p class="data">Slika</p></td>
-          <td><p class="data">Naziv</p></td>
-          <td><p class="data">Autor</p></td>
+          <td v-if="this.user.role=='Kupac'"><p class="data">Naziv</p></td>
+          <td v-if="this.user.role=='Prodavac'"><input class="input-data" type="text" placeholder="Naziv" v-model="searchName"></td>
+          <td v-if="this.user.role=='Kupac'"><p class="data">Autor</p></td>
+          <td v-if="this.user.role=='Prodavac'"><input class="input-data" type="text" placeholder="Autor" v-model="searchAuthor"></td>
           <td><p class="data" v-if="preporuka">Preporučio</p></td>
         </tr>
         <tr
@@ -51,36 +53,67 @@ const prikazPoStrani = 5;
 export default {
   name: "CardList",
   props: {
-    knjige: Array,
+    knjige: [],
     preporuka: Boolean,
   },
   created() {
-    this.numOfButtons = Math.floor(this.knjige.length / prikazPoStrani);
-    if (this.knjige.length % prikazPoStrani != 0) {
-      this.numOfButtons++;
+    if (localStorage.getItem("user")) {
+      this.user = JSON.parse(localStorage.getItem("user"));
     }
-    if(this.knjige.length <= 5){
-      this.numOfButtons=0;
-    }
-    this.knjigePrikaz = this.knjige.slice(this.indFrom, this.indTo);
+    this.knjigeSearch = this.knjige;
+    this.createButtons();
+    this.knjigePrikaz = this.knjigeSearch.slice(this.indFrom, this.indTo);
   },
   data() {
     return {
-      knjigePrikaz: null,
+      knjigePrikaz: [],
+      knjigeSearch: [],
       indFrom: 0,
       indTo: prikazPoStrani,
       numOfButtons: 0,
+      searchName: "",
+      searchAuthor: "",
+      user: null,
     };
+  },
+  watch:{
+    searchName(){
+      this.searchBooks();
+    },
+    searchAuthor(){
+      this.searchBooks();
+    }
   },
   methods: {
     changePage(num) {
       this.indFrom = prikazPoStrani * (num - 1);
       this.indTo = prikazPoStrani * num;
-      this.knjigePrikaz = this.knjige.slice(this.indFrom, this.indTo);
+      this.knjigePrikaz = this.knjigeSearch.slice(this.indFrom, this.indTo);
     },
     goToBook(num) {
       router.push({ name: "PregledKnjige", params: { id: num } });
     },
+    createButtons(){
+      this.numOfButtons = Math.floor(this.knjigeSearch.length / prikazPoStrani);
+      if (this.knjigeSearch.length % prikazPoStrani != 0) {
+        this.numOfButtons++;
+      }
+      if(this.knjigeSearch.length <= 5){
+        this.numOfButtons=0;
+      }
+    },
+    searchBooks(){
+      this.knjigeSearch = this.knjige.filter(knjiga =>{
+        return knjiga.naziv.toLowerCase().includes(this.searchName.toLowerCase());
+      });
+      this.knjigeSearch = this.knjigeSearch.filter(knjiga =>{
+        return knjiga.autor.toLowerCase().includes(this.searchAuthor.toLowerCase());
+      });
+      this.indFrom = 0;
+      this.indTo = prikazPoStrani;
+      this.createButtons();
+      this.knjigePrikaz = this.knjigeSearch.slice(this.indFrom, this.indTo);
+    }
   },
 };
 </script>
@@ -103,8 +136,8 @@ export default {
 
 .img {
   height: 40px;
-  widows: 40px;
-  padding-left: 50px;
+  width: 30px;
+  margin-left: 50px;
 }
 
 .row {
@@ -118,5 +151,16 @@ export default {
 
 .data {
   padding-left: 50px;
+}
+
+.input-data {
+  background-color: #c9d6df;
+  border-radius: 30px;
+  font-size: 16px;
+  height: 20px;
+  width: 200px;
+  padding-left: 10px;
+  margin-left: 50px;
+  border: none;
 }
 </style>

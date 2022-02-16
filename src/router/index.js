@@ -53,7 +53,17 @@ const routes = [
     path: '/preporucene',
     name: 'PreporuceneKnjige',
     component: PreporuceneKnjige,
-    beforeEnter
+    beforeEnter(from, to, next){
+      if (localStorage.getItem('user')) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if(user.role == "Kupac")
+          return next();
+        else
+          return next({ path: '/' });
+      }
+    
+      return next({ path: '/login' });
+    }
   },
   {
     path: '/knjiga/:id',
@@ -62,14 +72,23 @@ const routes = [
     beforeEnter
   },
   {
-    path: '/dodajKnjigu',
+    path: '/dodajknjigu',
     name: 'DodajKnjigu',
     component: DodajKnjigu,
-    beforeEnter
+    beforeEnter(from, to, next){
+      if (localStorage.getItem('user')) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if(user.role == "Prodavac")
+          return next();
+        else
+          return next({ path: '/' });
+      }
+    
+      return next({ path: '/login' });
+    }
   },
 ]
 
-//napravi guard za tipove prodavac i kupac
 //napravi gurad za id knjige
 
 const router = new VueRouter({
