@@ -1,37 +1,37 @@
 let preporucene = [
     {
         idKnjige: 1,
-        od: "admin",
+        od: "pera",
         za: "lmiletic"
     },
     {
         idKnjige: 2,
-        od: "admin",
+        od: "zika",
         za: "pera"
     },
     {
         idKnjige: 2,
-        od: "admin",
-        za: "pera"
+        od: "lmiletic",
+        za: "zika"
     },
     {
         idKnjige: 3,
-        od: "admin",
+        od: "zika",
         za: "lmiletic"
     },
     {
         idKnjige: 6,
-        od: "admin",
+        od: "pera",
         za: "lmiletic"
     },
     {
         idKnjige: 7,
-        od: "admin",
+        od: "pera",
         za: "lmiletic"
     },
     {
         idKnjige: 2,
-        od: "admin",
+        od: "pera",
         za: "lmiletic"
     }
 ];

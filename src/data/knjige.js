@@ -3,7 +3,7 @@ let knjige = [
         id: 1,
         naziv: "Hari Poter i Red Feniksa",
         autor: "Dž. K. Rouling",
-        opis: "Nakon napada dementora na Harija i njegovog rođaka Dadlija, profesori i čarobnjaci prinuđeni su da ponovo aktiviraju pokret otpora pod nazivom Red Feniksa...",
+        opis: "Opis 1",
         brStrana: 974,
         izdanje: "2007.",
         img: "red_feniksa",
