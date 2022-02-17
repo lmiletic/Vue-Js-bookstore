@@ -7,6 +7,7 @@ import IzmeniSifru from '../views/IzmeniSifru.vue'
 import PreporuceneKnjige from '../views/PreporuceneKnjige.vue';
 import PregledKnjige from '../views/PregledKnjige.vue';
 import DodajKnjigu from '../views/DodajKnjigu.vue';
+import knjige from '../data/knjige.js';
 
 Vue.use(VueRouter)
 
@@ -69,7 +70,24 @@ const routes = [
     path: '/knjiga/:id',
     name: 'PregledKnjige',
     component: PregledKnjige,
-    beforeEnter
+    beforeEnter(from, to, next){
+      if (localStorage.getItem('user')) {
+        var knjigeL;
+        if(localStorage.getItem('knjige')){
+          knjigeL = JSON.parse(localStorage.getItem('knjige'));
+        }else{
+          knjigeL = knjige;
+        }
+        let knjiga = knjigeL.find(knjiga => {
+          return knjiga.id == from.params.id;
+        });
+        if(knjiga == null){
+          return next({ path: '/' });
+        }
+        return next();
+      }
+      return next({ path: '/login' });
+    }
   },
   {
     path: '/dodajknjigu',
@@ -88,8 +106,6 @@ const routes = [
     }
   },
 ]
-
-//napravi gurad za id knjige
 
 const router = new VueRouter({
   mode: 'history',
